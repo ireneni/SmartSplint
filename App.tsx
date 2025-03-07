@@ -1,20 +1,17 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { SafeAreaView } from 'react-native';
+import LoginScreen from './src/screens/LoginScreen';
+import FingerSelectionScreen from './src/screens/FingerSelectionScreen';
+import LandingScreen from './src/screens/LandingScreen';
+import HandSelectionScreen from './src/screens/HomePage';
+import ScanningScreen from './src/screens/ScanningScreen';
+import ConfirmImageScreen from './src/screens/ConfirmImageScreen';
+import FrontScanTutorial from './src/screens/FrontScanTutorial';
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+ return (
+   <SafeAreaView style={{ flex: 1 }}>
+     <FrontScanTutorial />
+   </SafeAreaView>
+ );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
