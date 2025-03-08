@@ -1,12 +1,18 @@
 import React from 'react';
 import { View, Image, StyleSheet, Pressable, Text } from 'react-native';
 import GlobalStyles from '../styles/GlobalStyles';
+import GlobalHeader from '../components/GlobalHeader';
 
 const ConfirmImageScreen = () => {
   const localImage = require('../assets/confirm-placeholder.png'); // Placeholder image
 
+  const handleBackPress = () => {
+    console.log('Back arrow pressed');
+  };
+
   return (
     <View style={styles.container}>
+    <GlobalHeader title="Confirm Image" onBackPress={handleBackPress} />
       {/* Display the captured image */}
       <View style={styles.imageWrapper}>
         <Image source={localImage} style={styles.image} resizeMode="contain" />
@@ -33,7 +39,6 @@ const styles = StyleSheet.create({
       flex: 1,
       backgroundColor: 'white',
       alignItems: 'center',
-      marginTop: 164,
   },
   imageWrapper: {
       width: '80%',
@@ -44,10 +49,10 @@ const styles = StyleSheet.create({
       height: '100%'
   },
   buttonContainer: {
-      width: '100%',
-      position: 'absolute',
-      bottom: 62, // Keeps buttons fixed at the bottom
-      paddingHorizontal: 24,
+    width: '100%',
+    marginTop: 'auto',
+    marginBottom: 62,
+    paddingHorizontal: 24,
   },
 });
 

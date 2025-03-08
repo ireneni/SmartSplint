@@ -1,4 +1,22 @@
 import { StyleSheet } from 'react-native';
+import {
+  useFonts,
+  Poppins_400Regular,
+  Poppins_500Medium,
+  Poppins_600SemiBold,
+  Poppins_700Bold,
+} from '@expo-google-fonts/poppins';
+
+export const useGlobalFonts = () => {
+  const [fontsLoaded] = useFonts({
+    "Poppins-Regular": Poppins_400Regular,
+    "Poppins-Medium": Poppins_500Medium,
+    "Poppins-SemiBold": Poppins_600SemiBold,
+    "Poppins-Bold": Poppins_700Bold,
+  });
+
+  return fontsLoaded;
+};
 
 const FONT_SIZES = {
   heading: 24,
@@ -54,7 +72,7 @@ const GlobalStyles = StyleSheet.create({
   buttonText: {
     fontSize: FONT_SIZES.buttonText,
     // Use a Poppins variant that is bold, e.g. "Poppins-Bold" or "Poppins-SemiBold"
-    fontFamily: 'Poppins-Bold',
+    fontFamily: 'Poppins-SemiBold',
     color: '#FFF',
   },
 

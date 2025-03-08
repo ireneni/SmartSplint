@@ -1,5 +1,6 @@
 import React from 'react';
 import { SafeAreaView } from 'react-native';
+import { useGlobalFonts } from './src/styles/GlobalStyles';
 import LoginScreen from './src/screens/LoginScreen';
 import FingerSelectionScreen from './src/screens/FingerSelectionScreen';
 import LandingScreen from './src/screens/LandingScreen';
@@ -9,9 +10,15 @@ import ConfirmImageScreen from './src/screens/ConfirmImageScreen';
 import FrontScanTutorial from './src/screens/FrontScanTutorial';
 
 export default function App() {
- return (
-   <SafeAreaView style={{ flex: 1 }}>
-     <FrontScanTutorial />
-   </SafeAreaView>
- );
+  const fontsLoaded = useGlobalFonts();
+
+  if (!fontsLoaded) {
+    return null; // Or a loading indicator component
+  }
+
+  return (
+    <SafeAreaView style={{ flex: 1 }}>
+      <ConfirmImageScreen />
+    </SafeAreaView>
+  );
 }

@@ -1,5 +1,5 @@
 {
-  "name": "Splintos",
+  "name": "SmartSplint",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -10,11 +10,12 @@
     "test": "jest"
   },
   "dependencies": {
+    "@expo-google-fonts/poppins": "^0.2.3",
     "expo": "^52.0.37",
+    "expo-camera": "~16.0.17",
+    "expo-font": "~13.0.4",
     "react": "18.3.1",
-    "react-native": "0.76.7",
-    "react-native-vision-camera": "^4.6.4",
-    "expo-camera": "~16.0.17"
+    "react-native": "0.76.7"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
