@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   View,
   Text,
@@ -6,18 +6,18 @@ import {
   Image,
   TouchableOpacity,
   SafeAreaView,
-} from 'react-native';
-import GlobalStyles from '../styles/GlobalStyles';
-import GlobalButton from '../components/GlobalButton';
+} from "react-native";
+import GlobalStyles from "../styles/GlobalStyles";
+import GlobalButton from "../components/GlobalButton";
 
 const LandingPage = () => {
   const handleGetStarted = () => {
-    console.log('Get Started pressed');
+    console.log("Get Started pressed");
     // Navigate or perform logic here
   };
 
   const handleSignIn = () => {
-    console.log('Sign In pressed');
+    console.log("Sign In pressed");
     // Navigate or perform logic here
   };
 
@@ -28,29 +28,29 @@ const LandingPage = () => {
         {/* Example of a simple 3x3 or 2x4 grid, adjust as needed */}
         <View style={styles.row}>
           <Image
-            source={{ uri: 'https://via.placeholder.com/100x100' }}
+            source={{ uri: "https://via.placeholder.com/100x100" }}
             style={styles.collageImage}
           />
           <Image
-            source={{ uri: 'https://via.placeholder.com/100x100' }}
+            source={{ uri: "https://via.placeholder.com/100x100" }}
             style={styles.collageImage}
           />
           <Image
-            source={{ uri: 'https://via.placeholder.com/100x100' }}
+            source={{ uri: "https://via.placeholder.com/100x100" }}
             style={styles.collageImage}
           />
         </View>
         <View style={styles.row}>
           <Image
-            source={{ uri: 'https://via.placeholder.com/100x100' }}
+            source={{ uri: "https://via.placeholder.com/100x100" }}
             style={styles.collageImage}
           />
           <Image
-            source={{ uri: 'https://via.placeholder.com/100x100' }}
+            source={{ uri: "https://via.placeholder.com/100x100" }}
             style={styles.collageImage}
           />
           <Image
-            source={{ uri: 'https://via.placeholder.com/100x100' }}
+            source={{ uri: "https://via.placeholder.com/100x100" }}
             style={styles.collageImage}
           />
         </View>
@@ -71,14 +71,12 @@ const LandingPage = () => {
           <GlobalButton
             title="Get Started"
             variant="primary"
-            size="large"
             onPress={handleGetStarted}
             style={styles.cardButton}
           />
           <GlobalButton
             title="Sign In"
             variant="secondary"
-            size="large"
             onPress={handleSignIn}
             style={styles.cardButton}
           />
@@ -86,12 +84,12 @@ const LandingPage = () => {
       </View>
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#2C2C2C', // Or the dark background from your Figma
+    backgroundColor: "#2C2C2C", // Or the dark background from your Figma
   },
   topCollageContainer: {
     flex: 1.2, // Adjust ratio to control how much space the collage occupies
@@ -101,46 +99,46 @@ const styles = StyleSheet.create({
     // overflow: 'hidden',
   },
   row: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
+    flexDirection: "row",
+    justifyContent: "space-around",
     marginVertical: 4,
   },
   collageImage: {
     width: 100,
     height: 100,
-    resizeMode: 'cover',
+    resizeMode: "cover",
     borderRadius: 8, // if you want rounded corners for each image
   },
   bottomCardContainer: {
     flex: 1,
-    backgroundColor: '#fff',
-    borderTopLeftRadius: 20,   // Round corners at the top
+    backgroundColor: "#fff",
+    borderTopLeftRadius: 20, // Round corners at the top
     borderTopRightRadius: 20,
     padding: 20,
-    alignItems: 'center',
+    alignItems: "center",
     // If you want a blue border around this white card, do:
     // borderWidth: 2,
     // borderColor: '#43C0F6',
   },
   cardTitle: {
-    textAlign: 'center',
+    textAlign: "center",
     marginBottom: 8,
     // If you want a specific color for the heading:
     // color: '#0A2463',
   },
   cardSubtitle: {
-    textAlign: 'center',
+    textAlign: "center",
     marginBottom: 24,
     // color: '#555',
   },
   buttonRow: {
-    width: '100%',
-    alignItems: 'center',
+    width: "100%",
+    alignItems: "center",
     // If you want the buttons stacked vertically, no change needed.
     // If you want them side-by-side, you can do flexDirection: 'row'.
   },
   cardButton: {
-    width: '100%',
+    width: "100%",
     marginBottom: 16,
   },
 });

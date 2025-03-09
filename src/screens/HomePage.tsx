@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   View,
   Text,
@@ -6,21 +6,23 @@ import {
   TouchableOpacity,
   Image,
   SafeAreaView,
-} from 'react-native';
-import GlobalStyles from '../styles/GlobalStyles';
-import GlobalButton from '../components/GlobalButton';
+} from "react-native";
+import GlobalStyles from "../styles/GlobalStyles";
+import GlobalButton from "../components/GlobalButton";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import colors from "../theme/colors";
 
 const HandSelectionScreen = () => {
   const handleLeftHandPress = () => {
-    console.log('Left hand pressed');
+    console.log("Left hand pressed");
   };
 
   const handleRightHandPress = () => {
-    console.log('Right hand pressed');
+    console.log("Right hand pressed");
   };
 
   const handleContactUsPress = () => {
-    console.log('Contact Us pressed');
+    console.log("Contact Us pressed");
   };
 
   return (
@@ -28,12 +30,10 @@ const HandSelectionScreen = () => {
       {/* Top Section */}
       <View style={styles.topContainer}>
         {/* App name in blue */}
-        <Text style={[GlobalStyles.heading, styles.appTitle]}>
-          SmartSplint
-        </Text>
+        <Text style={[GlobalStyles.heading, styles.appTitle]}>SmartSplint</Text>
 
         {/* Welcome message */}
-        <Text style={[GlobalStyles.subheading, styles.welcomeText]}>
+        <Text style={[GlobalStyles.heading, styles.welcomeText]}>
           Welcome back, Brenda!
         </Text>
 
@@ -46,25 +46,37 @@ const HandSelectionScreen = () => {
       {/* Middle Section: Hand buttons */}
       <View style={styles.handRow}>
         <TouchableOpacity
-          style={[GlobalStyles.buttonLarge, GlobalStyles.buttonPrimary, styles.handButton]}
+          style={[
+            GlobalStyles.buttonLarge,
+            GlobalStyles.buttonPrimary,
+            styles.handButton,
+          ]}
           onPress={handleLeftHandPress}
         >
-          <Image
-            source={require('../assets/hand-left.png')}
+          <Ionicons
             style={styles.handImage}
+            name="hand-left"
+            size={80}
+            color="white"
           />
-          <Text style={GlobalStyles.buttonText}>Left Hand</Text>
+          <Text style={GlobalStyles.buttonText}>Left</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={[GlobalStyles.buttonLarge, GlobalStyles.buttonPrimary, styles.handButton]}
+          style={[
+            GlobalStyles.buttonLarge,
+            GlobalStyles.buttonPrimary,
+            styles.handButton,
+          ]}
           onPress={handleRightHandPress}
         >
-          <Image
-            source={require('../assets/hand-right.png')}
+          <Ionicons
             style={styles.handImage}
+            name="hand-right"
+            size={80}
+            color="white"
           />
-          <Text style={GlobalStyles.buttonText}>Right Hand</Text>
+          <Text style={GlobalStyles.buttonText}>Right</Text>
         </TouchableOpacity>
       </View>
 
@@ -73,7 +85,6 @@ const HandSelectionScreen = () => {
         <GlobalButton
           title="Contact Us"
           variant="secondary"
-          size="large"
           onPress={handleContactUsPress}
           // If you want black text, override here:
           // textStyle={{ color: '#000' }}
@@ -81,58 +92,55 @@ const HandSelectionScreen = () => {
       </View>
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   // Full white background, no radius, no card
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
   },
 
   // Top Section
   topContainer: {
-    alignItems: 'center',
+    alignItems: "center",
     marginTop: 20, // Adjust as needed
   },
   appTitle: {
-    color: '#43C0F6', // Blue text for the title
+    color: colors.blue.light20, // Blue text for the title
   },
   welcomeText: {
-    color: '#000',
+    color: "#000",
     marginTop: 60,
+    textAlign: "center",
   },
   instructionText: {
-    color: '#000',
+    color: "#000",
     marginTop: 40,
   },
 
   // Middle Section: Hand buttons
   handRow: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
     marginTop: 2, // Adjust spacing as needed
   },
   handButton: {
     width: 150,
     height: 150,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     marginHorizontal: 8,
   },
   handImage: {
-    width: 84,
-    height: 88,
-    marginBottom: 8,
-    resizeMode: 'contain',
+    marginBottom: 12,
   },
-
   // Bottom Section
   bottomContainer: {
-    marginTop: 'auto',       // Push this to the bottom
-    marginBottom: 62,        // Adjust spacing from bottom
-    alignItems: 'center',
+    marginTop: "auto", // Push this to the bottom
+    marginBottom: 40, // Adjust spacing from bottom
+    alignItems: "center",
     paddingHorizontal: 24,
   },
 });
