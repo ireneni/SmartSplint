@@ -47,6 +47,12 @@ const ScanningScreen = () => {
       };
       try {
         const photo = await cameraRef.current.takePictureAsync(options);
+  
+        if (!photo || !photo.uri) {
+          console.error("No photo returned from takePictureAsync");
+          return;
+        }
+  
         setPhoto(photo);
       } catch (error) {
         console.error("Error capturing photo:", error);

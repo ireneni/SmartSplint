@@ -3,6 +3,7 @@ import { View, Image, StyleSheet, Pressable, Text } from "react-native";
 import GlobalStyles from "../styles/GlobalStyles";
 import GlobalHeader from "../components/GlobalHeader";
 import { CameraCapturedPicture } from "expo-camera";
+import { uploadImage } from "../utils/uploadImage";
 
 const ConfirmImageScreen = ({
   photo,
@@ -11,6 +12,19 @@ const ConfirmImageScreen = ({
   photo: CameraCapturedPicture;
   handleRetake: () => void;
 }) => {
+  
+  const handleConfirm = async () => {
+    if (!photo?.uri) return;
+    
+    try {
+      console.log("Uploading image...");
+      await uploadImage(photo.uri);
+      console.log("Image uploaded successfully!");
+    } catch (error) {
+      console.error("Error uploading image:", error);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <GlobalHeader title="Confirm Image" onBackPress={handleRetake} />
@@ -38,7 +52,7 @@ const ConfirmImageScreen = ({
 
         <Pressable
           style={[GlobalStyles.buttonLarge, GlobalStyles.buttonPrimary]}
-          onPress={() => console.log("Confirm Image")}
+          onPress={handleConfirm}
         >
           <Text style={GlobalStyles.buttonText}>Confirm</Text>
         </Pressable>
