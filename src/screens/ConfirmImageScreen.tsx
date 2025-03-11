@@ -5,6 +5,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { CameraCapturedPicture } from "expo-camera";
 import GlobalButton from "../components/GlobalButton";
 import GlobalStyles from "../styles/GlobalStyles";
+import { uploadImage } from "../utils/uploadImage";
 
 type ConfirmImageScreenRouteParams = {
   photo: CameraCapturedPicture;
@@ -27,6 +28,16 @@ const ConfirmImageScreen: React.FC = () => {
 
   const handleConfirm = () => {
     console.log("Confirm Image");
+    if (!photo?.uri) return;
+    
+    try {
+      console.log("Uploading image...");
+      await uploadImage(photo.uri);
+      console.log("Image uploaded successfully!");
+    } catch (error) {
+      console.error("Error uploading image:", error);
+    }
+
     if (scanType === "front") {
       // After confirming a front scan, move forward to the side scan tutorial
       navigation.navigate("SideScanTutorial", { finger, hand });

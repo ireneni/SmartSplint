@@ -61,12 +61,19 @@ const ScanningScreen: React.FC<ScanningScreenProps> = () => {
   const takePhoto = async () => {
     console.log("Photo Captured!");
     if (cameraRef.current) {
+      const options = {
+        quality: 1,
+        exif: false,
+      };
       try {
-        const photo = await cameraRef.current.takePictureAsync({
-          quality: 1,
-          exif: false,
-        });
-        // Use push to ensure a forward transition
+        const photo = await cameraRef.current.takePictureAsync(options);
+
+        if (!photo || !photo.uri) {
+          console.error("No photo returned from takePictureAsync");
+          return;
+        }
+
+        setPhoto(photo);
         navigation.push("ConfirmImage", { photo, finger, hand, scanType });
       } catch (error) {
         console.error("Error capturing photo:", error);
