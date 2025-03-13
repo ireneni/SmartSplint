@@ -1,16 +1,24 @@
 import React from "react";
 import { View, Image, StyleSheet, Pressable, Text } from "react-native";
-import GlobalStyles from "../styles/GlobalStyles";
 import GlobalHeader from "../components/GlobalHeader";
+import GlobalStyles from "../styles/GlobalStyles";
+import { useNavigation } from "@react-navigation/native";
 import { CameraCapturedPicture } from "expo-camera";
 
-const ConfirmImageScreen = ({
-  photo,
-  handleRetake,
-}: {
+type ConfirmImageScreenProps = {
   photo: CameraCapturedPicture;
   handleRetake: () => void;
-}) => {
+};
+
+const ConfirmImageScreen: React.FC<ConfirmImageScreenProps> = ({ photo, handleRetake }) => {
+  const navigation = useNavigation();
+
+  const handleConfirm = () => {
+    console.log("Confirm Image");
+    // Navigate to the next screen (e.g., ImageConfirmed) and pass the photo as a parameter.
+    navigation.navigate("ImageConfirmed", { photo });
+  };
+
   return (
     <View style={styles.container}>
       <GlobalHeader title="Confirm Image" onBackPress={handleRetake} />
@@ -38,7 +46,7 @@ const ConfirmImageScreen = ({
 
         <Pressable
           style={[GlobalStyles.buttonLarge, GlobalStyles.buttonPrimary]}
-          onPress={() => console.log("Confirm Image")}
+          onPress={handleConfirm}
         >
           <Text style={GlobalStyles.buttonText}>Confirm</Text>
         </Pressable>
@@ -46,6 +54,8 @@ const ConfirmImageScreen = ({
     </View>
   );
 };
+
+export default ConfirmImageScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -68,5 +78,3 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
   },
 });
-
-export default ConfirmImageScreen;

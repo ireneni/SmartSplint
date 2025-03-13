@@ -1,31 +1,27 @@
 import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  SafeAreaView,
-} from "react-native";
+import { Dimensions, View, Text, StyleSheet, Image, SafeAreaView } from "react-native";
 import GlobalStyles from "../styles/GlobalStyles";
 import GlobalButton from "../components/GlobalButton";
 
-const LandingPage = () => {
+type LandingPageProps = {
+  navigation: any; // or use a more specific type from React Navigation
+};
+
+const LandingPage: React.FC<LandingPageProps> = ({ navigation }) => {
   const handleGetStarted = () => {
     console.log("Get Started pressed");
-    // Navigate or perform logic here
+    navigation.navigate("GetStartedInfo");
   };
 
   const handleSignIn = () => {
     console.log("Sign In pressed");
-    // Navigate or perform logic here
+    navigation.navigate("Login");
   };
 
   return (
     <SafeAreaView style={styles.container}>
       {/* Top Section: Collage of images */}
       <View style={styles.topCollageContainer}>
-        {/* Example of a simple 3x3 or 2x4 grid, adjust as needed */}
         <View style={styles.row}>
           <Image
             source={{ uri: "https://via.placeholder.com/100x100" }}
@@ -54,7 +50,6 @@ const LandingPage = () => {
             style={styles.collageImage}
           />
         </View>
-        {/* Add more rows as needed for your collage */}
       </View>
 
       {/* Bottom Section: White card area */}
@@ -86,17 +81,17 @@ const LandingPage = () => {
   );
 };
 
+export default LandingPage;
+
+const SCREEN_HEIGHT = Dimensions.get("window").height;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#2C2C2C", // Or the dark background from your Figma
+    backgroundColor: "#2C2C2C",
   },
   topCollageContainer: {
-    flex: 1.2, // Adjust ratio to control how much space the collage occupies
-    // If you want rounded corners at the bottom of this collage, do something like:
-    // borderBottomLeftRadius: 30,
-    // borderBottomRightRadius: 30,
-    // overflow: 'hidden',
+    flex: 1.2,
   },
   row: {
     flexDirection: "row",
@@ -107,40 +102,32 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     resizeMode: "cover",
-    borderRadius: 8, // if you want rounded corners for each image
+    borderRadius: 8,
   },
   bottomCardContainer: {
-    flex: 1,
     backgroundColor: "#fff",
-    borderTopLeftRadius: 20, // Round corners at the top
+    borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    padding: 20,
+    paddingTop: 24,
     alignItems: "center",
-    // If you want a blue border around this white card, do:
-    // borderWidth: 2,
-    // borderColor: '#43C0F6',
+    paddingHorizontal: 24,
+    minHeight: SCREEN_HEIGHT * 0.38,
+    maxHeight: SCREEN_HEIGHT * 0.45,
   },
   cardTitle: {
     textAlign: "center",
-    marginBottom: 8,
-    // If you want a specific color for the heading:
-    // color: '#0A2463',
   },
   cardSubtitle: {
     textAlign: "center",
-    marginBottom: 24,
-    // color: '#555',
   },
   buttonRow: {
     width: "100%",
     alignItems: "center",
-    // If you want the buttons stacked vertically, no change needed.
-    // If you want them side-by-side, you can do flexDirection: 'row'.
+    position: "absolute",
+    bottom: 40,
   },
   cardButton: {
     width: "100%",
-    marginBottom: 16,
+    paddingHorizontal: 24,
   },
 });
-
-export default LandingPage;
