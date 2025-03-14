@@ -6,6 +6,7 @@ import {
   Poppins_600SemiBold,
 } from "@expo-google-fonts/poppins";
 import colors from "../theme/colors";
+import { Platform } from "react-native";
 
 export const useGlobalFonts = () => {
   const [fontsLoaded] = useFonts({
@@ -91,7 +92,6 @@ const GlobalStyles = StyleSheet.create({
     fontSize: FONT_SIZES.body,
     fontFamily: "Poppins-Regular",
     color: colors.text.link,
-    textDecorationLine: "underline",
   },
 
   // Input field styles
@@ -100,6 +100,7 @@ const GlobalStyles = StyleSheet.create({
     borderColor: "#CCC",
     borderRadius: 16,
     paddingHorizontal: 12,
+    paddingTop: Platform.OS === "android" ? 20 : 0,
     justifyContent: "center",
     marginVertical: 12,
     height: DIMENSIONS.inputHeight,
@@ -108,7 +109,6 @@ const GlobalStyles = StyleSheet.create({
     fontSize: FONT_SIZES.label,
     fontFamily: "Poppins-Regular",
     color: "#747474",
-    //marginTop: 2,
   },
   inputText: {
     fontSize: FONT_SIZES.label,
@@ -120,6 +120,12 @@ const GlobalStyles = StyleSheet.create({
     fontSize: FONT_SIZES.heading,
     fontFamily: "Poppins-Medium",
     color: "#000",
+  },
+  buttonContainer: {
+    width: "100%",
+    marginTop: "auto",
+    marginBottom: 24,
+    paddingHorizontal: 24,
   },
 });
 

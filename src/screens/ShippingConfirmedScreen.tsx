@@ -18,7 +18,7 @@ type ShippingConfirmedScreenProps = {
 
 const shippingIcon = require("../assets/tracking.png");
 
-const ShippingConfirmedScreen: React.FC = ({navigation}) => {
+const ShippingConfirmedScreen: React.FC = ({ navigation }) => {
   const handleBackPress = () => {
     console.log("Back arrow pressed");
     navigation.goBack();
@@ -53,7 +53,7 @@ const ShippingConfirmedScreen: React.FC = ({navigation}) => {
         </View>
 
         {/* Pinned Button (40px from bottom) */}
-        <View style={styles.buttonContainer}>
+        <View style={GlobalStyles.buttonContainer}>
           <GlobalButton
             title="Home"
             variant="primary"
@@ -96,13 +96,5 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 40,
     paddingBottom: 40,
-  },
-  buttonContainer: {
-    width: "100%",
-    paddingHorizontal: 24,
-    bottom: 40,
-    left: 0,
-    right: 0,
-    alignItems: "center",
   },
 });

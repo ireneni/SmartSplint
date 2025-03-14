@@ -15,7 +15,9 @@ type HandSelectionScreenProps = {
   navigation: any; // You can replace this with a more specific type if desired
 };
 
-const HandSelectionScreen: React.FC<HandSelectionScreenProps> = ({ navigation }) => {
+const HandSelectionScreen: React.FC<HandSelectionScreenProps> = ({
+  navigation,
+}) => {
   const handleLeftHandPress = () => {
     console.log("Left hand pressed");
     navigation.navigate("FingerSelection", { hand: "Left" });
@@ -82,7 +84,7 @@ const HandSelectionScreen: React.FC<HandSelectionScreenProps> = ({ navigation })
       </View>
 
       {/* Bottom Section: Contact Us button */}
-      <View style={styles.bottomContainer}>
+      <View style={GlobalStyles.buttonContainer}>
         <GlobalButton
           title="Contact Us"
           variant="secondary"
@@ -135,13 +137,5 @@ const styles = StyleSheet.create({
   },
   handImage: {
     marginBottom: 12,
-  },
-
-  // Bottom Section
-  bottomContainer: {
-    marginTop: "auto", // Pushes this container to the bottom
-    marginBottom: 40,
-    alignItems: "center",
-    paddingHorizontal: 24,
   },
 });

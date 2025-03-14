@@ -2,11 +2,9 @@ import React, { useState } from "react";
 import {
   SafeAreaView,
   View,
-  Text,
   StyleSheet,
   KeyboardAvoidingView,
   Platform,
-  ScrollView,
 } from "react-native";
 import GlobalHeader from "../components/GlobalHeader";
 import GlobalInput from "../components/GlobalInput";
@@ -16,7 +14,8 @@ import GlobalStyles from "../styles/GlobalStyles";
 type NewAddressScreenProps = {
   navigation: any;
 };
-const NewAddressScreen: React.FC = ({navigation}) => {
+
+const NewAddressScreen: React.FC = ({ navigation }) => {
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
   const [postalCode, setPostalCode] = useState("");
@@ -27,7 +26,9 @@ const NewAddressScreen: React.FC = ({navigation}) => {
   };
 
   const handleConfirmAddress = () => {
-    console.log(`Address: ${address}, City: ${city}, PostalCode: ${postalCode}`);
+    console.log(
+      `Address: ${address}, City: ${city}, PostalCode: ${postalCode}`
+    );
     navigation.navigate("OrderKit");
   };
 
@@ -39,30 +40,22 @@ const NewAddressScreen: React.FC = ({navigation}) => {
         style={styles.wrapper}
         behavior={Platform.OS === "ios" ? "padding" : undefined}
       >
-        {/* ScrollView so content can scroll on smaller screens */}
-        <ScrollView contentContainerStyle={styles.scrollContent}>
-
+        <View style={styles.content}>
           <GlobalInput
             label="Address"
             value={address}
             onChangeText={setAddress}
           />
-
-          <GlobalInput
-            label="City"
-            value={city}
-            onChangeText={setCity}
-          />
-
+          <GlobalInput label="City" value={city} onChangeText={setCity} />
           <GlobalInput
             label="Postal Code"
             value={postalCode}
             onChangeText={setPostalCode}
           />
-        </ScrollView>
+        </View>
 
-        {/* Button pinned 40px from bottom */}
-        <View style={styles.buttonContainer}>
+        {/* Button pinned at the bottom */}
+        <View style={GlobalStyles.buttonContainer}>
           <GlobalButton
             title="Confirm Address"
             variant="primary"
@@ -83,22 +76,10 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     flex: 1,
+    justifyContent: "space-between", // Pushes input fields up and keeps button at the bottom
   },
-  scrollContent: {
+  content: {
     paddingHorizontal: 24,
     paddingTop: 24,
-    paddingBottom: 120, // Ensures last field isn't obscured by the pinned button
-  },
-  subtitle: {
-    textAlign: "center",
-    marginBottom: 24,
-  },
-  buttonContainer: {
-    width: "100%",
-    bottom: 40,
-    left: 0,
-    right: 0,
-    alignItems: "center",
-    paddingHorizontal: 24,
   },
 });

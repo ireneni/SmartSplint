@@ -4,20 +4,21 @@ import {
   View,
   Text,
   StyleSheet,
-  ScrollView,
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
 import GlobalHeader from "../components/GlobalHeader";
 import GlobalButton from "../components/GlobalButton";
 import GlobalStyles from "../styles/GlobalStyles";
-// If you have a colors.ts file with a "blue.light30" or similar, import it here:
 import colors from "../theme/colors";
 
 type GetStartedInfoScreenProps = {
-  navigation: any; // or use a more specific type from React Navigation
+  navigation: any;
 };
-const GetStartedInfoScreen: React.FC = ({ navigation }) => {
+
+const GetStartedInfoScreen: React.FC<GetStartedInfoScreenProps> = ({
+  navigation,
+}) => {
   const handleBackPress = () => {
     console.log("Back arrow pressed");
     navigation.goBack();
@@ -26,31 +27,29 @@ const GetStartedInfoScreen: React.FC = ({ navigation }) => {
   const handleContinue = () => {
     console.log("Continue button pressed");
     navigation.navigate("Signup");
-    // Navigate to the next screen or perform your logic here
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Optional GlobalHeader if needed */}
-      <GlobalHeader title="" onBackPress={handleBackPress} />
+      {/* Header */}
+      <GlobalHeader title="Welcome" onBackPress={handleBackPress} />
 
       <KeyboardAvoidingView
         style={styles.wrapper}
         behavior={Platform.OS === "ios" ? "padding" : undefined}
       >
-        <ScrollView contentContainerStyle={styles.scrollContent}>
-          {/* Title */}
-          <Text style={[GlobalStyles.heading, styles.title]}>
-            Welcome to{" "}
-            <Text style={styles.highlightText}>SmartSplint</Text>
-          </Text>
-
+        <View style={styles.content}>
           {/* Subtitle */}
           <Text style={[GlobalStyles.bodyText, styles.subtitle]}>
-            {"Skip the uncomfortable splints.\nStart your SmartSplint journey."}
+            Skip the uncomfortable splints.{"\n"}
+            Start your{" "}
+            <Text style={[GlobalStyles.subheading, styles.highlightText]}>
+              SmartSplint
+            </Text>{" "}
+            journey.
           </Text>
 
-          {/* Step 1 */}
+          {/* Steps */}
           <View style={styles.stepCard}>
             <Text style={[GlobalStyles.subheading, styles.stepTitle]}>
               1. Order your scanning kit
@@ -60,7 +59,6 @@ const GetStartedInfoScreen: React.FC = ({ navigation }) => {
             </Text>
           </View>
 
-          {/* Step 2 */}
           <View style={styles.stepCard}>
             <Text style={[GlobalStyles.subheading, styles.stepTitle]}>
               2. Set it up
@@ -70,7 +68,6 @@ const GetStartedInfoScreen: React.FC = ({ navigation }) => {
             </Text>
           </View>
 
-          {/* Step 3 */}
           <View style={styles.stepCard}>
             <Text style={[GlobalStyles.subheading, styles.stepTitle]}>
               3. Scan!
@@ -84,10 +81,10 @@ const GetStartedInfoScreen: React.FC = ({ navigation }) => {
           <Text style={[GlobalStyles.bodyText, styles.finalNote]}>
             Wait for your perfect splint!
           </Text>
-        </ScrollView>
+        </View>
 
-        {/* Pinned Button (40px from the bottom) */}
-        <View style={styles.buttonContainer}>
+        {/* Button Container */}
+        <View style={GlobalStyles.buttonContainer}>
           <GlobalButton
             title="Continue"
             variant="primary"
@@ -108,19 +105,18 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     flex: 1,
+    justifyContent: "space-between",
   },
-  scrollContent: {
+  content: {
+    flex: 1,
     paddingHorizontal: 24,
-    paddingTop: 24,
-    paddingBottom: 120, // Ensures the last text isn't obscured by the pinned button
   },
   title: {
     textAlign: "center",
     marginBottom: 8,
-
   },
   highlightText: {
-    color: colors.blue.light30, // Use your secondary blue color
+    color: colors.blue.light20,
   },
   subtitle: {
     textAlign: "center",
@@ -130,33 +126,18 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderWidth: 1,
     borderColor: "#ccc",
-    borderRadius: 12,
+    borderRadius: 16,
     padding: 16,
     marginBottom: 16,
-    // If you want a subtle shadow on iOS/Android:
-     shadowColor: "#000",
-     shadowOffset: { width: 0, height: 2 },
-     shadowOpacity: 0.1,
-     elevation: 2,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    elevation: 2,
   },
   stepTitle: {
     marginBottom: 4,
   },
-  stepBody: {
-    // If needed, adjust line height or text styling
-  },
   finalNote: {
     textAlign: "center",
-    //marginTop: 16,
-    marginBottom: 24,
-    //paddingVertical: 24,
-  },
-  buttonContainer: {
-    width: "100%",
-    paddingHorizontal: 24,
-    bottom: 40,
-    left: 0,
-    right: 0,
-    alignItems: "center",
   },
 });

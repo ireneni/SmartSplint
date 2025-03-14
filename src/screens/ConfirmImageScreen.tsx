@@ -1,26 +1,29 @@
 import React from "react";
-import { View, Image, StyleSheet, Pressable, Text } from "react-native";
+import { SafeAreaView, View, Image, StyleSheet } from "react-native";
 import GlobalHeader from "../components/GlobalHeader";
-import GlobalStyles from "../styles/GlobalStyles";
 import { useNavigation } from "@react-navigation/native";
 import { CameraCapturedPicture } from "expo-camera";
+import GlobalButton from "../components/GlobalButton";
+import GlobalStyles from "../styles/GlobalStyles";
 
 type ConfirmImageScreenProps = {
   photo: CameraCapturedPicture;
   handleRetake: () => void;
 };
 
-const ConfirmImageScreen: React.FC<ConfirmImageScreenProps> = ({ photo, handleRetake }) => {
+const ConfirmImageScreen: React.FC<ConfirmImageScreenProps> = ({
+  photo,
+  handleRetake,
+}) => {
   const navigation = useNavigation();
 
   const handleConfirm = () => {
     console.log("Confirm Image");
-    // Navigate to the next screen (e.g., ImageConfirmed) and pass the photo as a parameter.
     navigation.navigate("ImageConfirmed", { photo });
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <GlobalHeader title="Confirm Image" onBackPress={handleRetake} />
       {/* Display the captured image */}
       <View style={styles.imageWrapper}>
@@ -36,22 +39,19 @@ const ConfirmImageScreen: React.FC<ConfirmImageScreenProps> = ({ photo, handleRe
       </View>
 
       {/* Retake and Confirm Buttons */}
-      <View style={styles.buttonContainer}>
-        <Pressable
-          style={[GlobalStyles.buttonLarge, GlobalStyles.buttonDestructive]}
+      <View style={GlobalStyles.buttonContainer}>
+        <GlobalButton
+          title="Retake Image"
+          variant="destructive"
           onPress={handleRetake}
-        >
-          <Text style={GlobalStyles.buttonText}>Retake Image</Text>
-        </Pressable>
-
-        <Pressable
-          style={[GlobalStyles.buttonLarge, GlobalStyles.buttonPrimary]}
+        />
+        <GlobalButton
+          title="Confirm"
+          variant="primary"
           onPress={handleConfirm}
-        >
-          <Text style={GlobalStyles.buttonText}>Confirm</Text>
-        </Pressable>
+        />
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -64,17 +64,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   imageWrapper: {
-    width: "80%",
-    height: "60%",
+    marginTop: 24,
+    width: "72%",
+    height: "54%",
   },
   image: {
     width: "100%",
     height: "100%",
-  },
-  buttonContainer: {
-    width: "100%",
-    marginTop: "auto",
-    marginBottom: 40,
-    paddingHorizontal: 24,
   },
 });

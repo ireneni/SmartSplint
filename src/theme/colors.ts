@@ -3,11 +3,12 @@ const colors = {
     primary: "#001F86",
     light20: "#0093ED",
     light30: "#7DD8FF",
+    light40: "#D6F5FF",
   },
   destructive: "#FC493B",
   text: {
     secondary: "#747474",
-    link: "001F86",
+    link: "#001F86",
   },
 };
 

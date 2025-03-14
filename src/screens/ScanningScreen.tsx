@@ -1,5 +1,12 @@
 import { useRef, useState } from "react";
-import { View, Text, StyleSheet, Dimensions, Pressable } from "react-native";
+import {
+  SafeAreaView,
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  Pressable,
+} from "react-native";
 import {
   CameraType,
   CameraView,
@@ -62,7 +69,7 @@ const ScanningScreen = () => {
     );
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       {/* Top Padding */}
       <View style={styles.topPadding} />
 
@@ -94,7 +101,7 @@ const ScanningScreen = () => {
           onPress={() => alert("Help Pressed")}
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -104,7 +111,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   topPadding: {
-    height: 80,
+    height: 60,
   },
   cameraContainer: {
     width: "100%",

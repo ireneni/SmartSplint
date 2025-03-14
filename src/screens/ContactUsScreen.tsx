@@ -15,8 +15,8 @@ import GlobalHeader from "../components/GlobalHeader";
 import GlobalInput from "../components/GlobalInput";
 type ContactUsScreenProps = {
   navigation: any;
-  }
-const ContactUsScreen: React.FC = ({navigation}) => {
+};
+const ContactUsScreen: React.FC = ({ navigation }) => {
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [message, setMessage] = useState<string>("");
@@ -49,11 +49,7 @@ const ContactUsScreen: React.FC = ({navigation}) => {
           </Text>
 
           {/* Name Input */}
-          <GlobalInput
-            label="Name"
-            value={name}
-            onChangeText={setName}
-          />
+          <GlobalInput label="Name" value={name} onChangeText={setName} />
 
           {/* Email Input */}
           <GlobalInput
@@ -77,7 +73,7 @@ const ContactUsScreen: React.FC = ({navigation}) => {
         </ScrollView>
 
         {/* Button pinned 40px from the bottom */}
-        <View style={styles.buttonContainer}>
+        <View style={GlobalStyles.buttonContainer}>
           <GlobalButton
             title="Send Message"
             variant="primary"
@@ -120,12 +116,5 @@ const styles = StyleSheet.create({
   textArea: {
     // Increase the height for a multiline input
     height: 250,
-  },
-  buttonContainer: {
-    position: "absolute",
-    width: "100%",
-    bottom: 40,
-    alignItems: "center",
-    paddingHorizontal: 24,
   },
 });

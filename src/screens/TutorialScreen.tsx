@@ -80,7 +80,7 @@ const TutorialScreen: React.FC<TutorialScreenProps> = ({
         </View>
       </View>
 
-      <View style={styles.buttonContainer}>
+      <View style={GlobalStyles.buttonContainer}>
         <GlobalButton
           title="Video Tutorial"
           variant="secondary"
@@ -137,12 +137,6 @@ const styles = StyleSheet.create({
   },
   activeDot: {
     backgroundColor: "#0A2463", // Active dot color (Primary button color)
-  },
-  buttonContainer: {
-    width: "100%",
-    position: "absolute",
-    bottom: 40, // Keeps buttons in a fixed position
-    paddingHorizontal: 24,
   },
 });
 

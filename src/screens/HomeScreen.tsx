@@ -7,7 +7,6 @@ import {
   StyleSheet,
   KeyboardAvoidingView,
   Platform,
-  ScrollView,
 } from "react-native";
 import GlobalHeader from "../components/GlobalHeader";
 import GlobalButton from "../components/GlobalButton";
@@ -51,18 +50,9 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
         style={styles.wrapper}
         behavior={Platform.OS === "ios" ? "padding" : undefined}
       >
-        <ScrollView contentContainerStyle={styles.scrollContent}>
+        <View style={styles.content}>
           {/* Scanner Kit Image */}
           <Image source={scannerKitImage} style={styles.scannerImage} />
-
-          {/* Order Kit Button */}
-          <View style={styles.buttonWrapper}>
-            <GlobalButton
-              title="Order Kit"
-              variant="primary"
-              onPress={handleOrderKit}
-            />
-          </View>
 
           {/* Activation Section */}
           <Text style={[GlobalStyles.subheading, styles.activateLabel]}>
@@ -74,8 +64,17 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
             onChangeText={setActivationCode}
             onSubmitEditing={handleSubmitCode}
             returnKeyType="done"
+            style={styles.input}
           />
-        </ScrollView>
+        </View>
+        {/* Order Kit Button */}
+        <View style={GlobalStyles.buttonContainer}>
+          <GlobalButton
+            title="Order Kit"
+            variant="primary"
+            onPress={handleOrderKit}
+          />
+        </View>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
@@ -91,10 +90,10 @@ const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
   },
-  scrollContent: {
+  content: {
+    flexGrow: 1, // Ensures content fills available space
+    marginTop: 40,
     paddingHorizontal: 24,
-    marginTop: 54,
-    paddingBottom: 120, // extra bottom padding so input isn't blocked by the keyboard
   },
   scannerImage: {
     width: "100%",
@@ -102,12 +101,7 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
     marginBottom: 24,
   },
-  buttonWrapper: {
-    alignItems: "center",
-    marginBottom: 24,
-  },
   activateLabel: {
     textAlign: "center",
-    marginBottom: 12,
   },
 });
