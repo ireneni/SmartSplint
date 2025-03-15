@@ -36,9 +36,8 @@ const NewAddressScreen: React.FC = ({ navigation }) => {
     <SafeAreaView style={styles.container}>
       <GlobalHeader title="New Address" onBackPress={handleBackPress} />
 
-      <KeyboardAvoidingView
+      <View
         style={styles.wrapper}
-        behavior={Platform.OS === "ios" ? "padding" : undefined}
       >
         <View style={styles.content}>
           <GlobalInput
@@ -62,7 +61,7 @@ const NewAddressScreen: React.FC = ({ navigation }) => {
             onPress={handleConfirmAddress}
           />
         </View>
-      </KeyboardAvoidingView>
+      </View>
     </SafeAreaView>
   );
 };

@@ -8,7 +8,7 @@ type SideScanTutorialProps = {
   route: {
     params: {
       finger: string; // e.g., "Index Finger", "Middle Finger", etc.
-      hand: string;   // e.g., "Left" or "Right" (optional if needed)
+      hand: string;   // e.g., "Left" or "Right"
     };
   };
 };
@@ -25,13 +25,12 @@ const sideSlides = [
 ];
 
 const SideScanTutorial: React.FC<SideScanTutorialProps> = ({ navigation, route }) => {
-  const { finger } = route.params;
+  const { finger, hand } = route.params;
 
   const handleBackPress = () => {
     console.log('Back arrow pressed');
     navigation.goBack();
   };
-
 
   const headerTitle = `${finger}`;
 
@@ -43,9 +42,8 @@ const SideScanTutorial: React.FC<SideScanTutorialProps> = ({ navigation, route }
         onVideoPress={() => console.log('Play side scan tutorial video')}
         onContinuePress={() => {
           console.log('Go to camera');
-          navigation.navigate("Scanning");
-          // Optionally navigate to the camera screen:
-          // navigation.navigate('CameraScreen');
+          // Use push to ensure a new scanning screen is added to the stack
+          navigation.push("Scanning", { finger, hand, scanType: "side" });
         }}
       />
     </SafeAreaView>

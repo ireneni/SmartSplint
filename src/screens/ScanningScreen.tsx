@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   SafeAreaView,
   View,
@@ -11,21 +11,35 @@ import {
   CameraType,
   CameraView,
   useCameraPermissions,
-  FlashMode,
 } from "expo-camera";
 import colors from "../theme/colors";
-import ConfirmImageScreen from "./ConfirmImageScreen";
 import GlobalIconButton from "../components/GlobalIconButton";
+import { useRoute, useNavigation } from "@react-navigation/native";
 
 const { width } = Dimensions.get("window");
 
-const ScanningScreen = () => {
+type ScanningScreenRouteParams = {
+  finger: string;
+  hand: string;
+  scanType: "front" | "side";
+};
+
+type ScanningScreenProps = {
+  route: {
+    params: ScanningScreenRouteParams;
+  };
+  navigation: any;
+};
+
+const ScanningScreen: React.FC<ScanningScreenProps> = () => {
+  const route = useRoute();
+  const navigation = useNavigation();
+  const { finger, hand, scanType } = route.params as ScanningScreenRouteParams;
+
   const [facing, setFacing] = useState<CameraType>("back");
   const [permission, requestPermission] = useCameraPermissions();
-  const [photo, setPhoto] = useState<any>(null);
   const cameraRef = useRef<CameraView | null>(null);
 
-  // While the permission request is loading, show a loading state
   if (!permission) {
     return (
       <View style={styles.permissionContainer}>
@@ -34,7 +48,6 @@ const ScanningScreen = () => {
     );
   }
 
-  // If permission is not granted, prompt the user
   if (!permission.granted) {
     return (
       <View style={styles.permissionContainer}>
@@ -48,32 +61,38 @@ const ScanningScreen = () => {
   const takePhoto = async () => {
     console.log("Photo Captured!");
     if (cameraRef.current) {
-      const options = {
-        quality: 1,
-        exif: false,
-      };
       try {
-        const photo = await cameraRef.current.takePictureAsync(options);
-        setPhoto(photo);
+        const photo = await cameraRef.current.takePictureAsync({
+          quality: 1,
+          exif: false,
+        });
+        // Use push to ensure a forward transition
+        navigation.push("ConfirmImage", { photo, finger, hand, scanType });
       } catch (error) {
         console.error("Error capturing photo:", error);
       }
     }
   };
 
-  const handleRetakePhoto = () => setPhoto(null);
+  const handleExit = () => {
+    console.log("Exit Pressed");
+    // Instead of simply going back, explicitly navigate to the originating tutorial
+    if (scanType === "front") {
+      navigation.navigate("FrontScanTutorial", { finger, hand });
+    } else {
+      navigation.navigate("SideScanTutorial", { finger, hand });
+    }
+  };
 
-  if (photo)
-    return (
-      <ConfirmImageScreen photo={photo} handleRetake={handleRetakePhoto} />
-    );
+  const handleHelp = () => {
+    console.log("Help Pressed");
+    // Optionally navigate to a help screen or show a modal
+  };
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Top Padding */}
       <View style={styles.topPadding} />
 
-      {/* Camera View */}
       <CameraView
         style={styles.cameraContainer}
         facing={facing}
@@ -81,14 +100,13 @@ const ScanningScreen = () => {
         flash="on"
       />
 
-      {/* Action Bar */}
       <View style={styles.actionBar}>
         <GlobalIconButton
           icon="close-sharp"
           label="Exit"
           backgroundColor={colors.destructive}
           iconColor="white"
-          onPress={() => alert("Exit Pressed")}
+          onPress={handleExit}
         />
         <Pressable style={styles.captureButtonOuter} onPress={takePhoto}>
           <View style={styles.captureButtonInner} />
@@ -98,12 +116,14 @@ const ScanningScreen = () => {
           label="Help"
           backgroundColor={colors.blue.light30}
           iconColor="black"
-          onPress={() => alert("Help Pressed")}
+          onPress={handleHelp}
         />
       </View>
     </SafeAreaView>
   );
 };
+
+export default ScanningScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -116,9 +136,6 @@ const styles = StyleSheet.create({
   cameraContainer: {
     width: "100%",
     height: (width * 4) / 3,
-  },
-  camera: {
-    flex: 1,
   },
   actionBar: {
     flexDirection: "row",
@@ -150,5 +167,3 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 });
-
-export default ScanningScreen;

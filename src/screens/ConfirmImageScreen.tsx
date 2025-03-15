@@ -1,25 +1,39 @@
 import React from "react";
 import { SafeAreaView, View, Image, StyleSheet } from "react-native";
 import GlobalHeader from "../components/GlobalHeader";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { CameraCapturedPicture } from "expo-camera";
 import GlobalButton from "../components/GlobalButton";
 import GlobalStyles from "../styles/GlobalStyles";
 
-type ConfirmImageScreenProps = {
+type ConfirmImageScreenRouteParams = {
   photo: CameraCapturedPicture;
-  handleRetake: () => void;
+  finger: string;
+  hand: string;
+  scanType: "front" | "side";
 };
 
-const ConfirmImageScreen: React.FC<ConfirmImageScreenProps> = ({
-  photo,
-  handleRetake,
-}) => {
+const ConfirmImageScreen: React.FC = () => {
   const navigation = useNavigation();
+  const route = useRoute();
+  const { photo, finger, hand, scanType } =
+    route.params as ConfirmImageScreenRouteParams;
+
+  const handleRetake = () => {
+    console.log("Retake Image");
+    // Simply pop the current screen, triggering a backward animation
+    navigation.goBack();
+  };
 
   const handleConfirm = () => {
     console.log("Confirm Image");
-    navigation.navigate("ImageConfirmed", { photo });
+    if (scanType === "front") {
+      // After confirming a front scan, move forward to the side scan tutorial
+      navigation.navigate("SideScanTutorial", { finger, hand });
+    } else {
+      // After confirming a side scan, move forward to the final image confirmed screen
+      navigation.navigate("ImageConfirmed", { photo, finger, hand });
+    }
   };
 
   return (
@@ -40,16 +54,8 @@ const ConfirmImageScreen: React.FC<ConfirmImageScreenProps> = ({
 
       {/* Retake and Confirm Buttons */}
       <View style={GlobalStyles.buttonContainer}>
-        <GlobalButton
-          title="Retake Image"
-          variant="destructive"
-          onPress={handleRetake}
-        />
-        <GlobalButton
-          title="Confirm"
-          variant="primary"
-          onPress={handleConfirm}
-        />
+        <GlobalButton title="Retake Image" variant="destructive" onPress={handleRetake} />
+        <GlobalButton title="Confirm" variant="primary" onPress={handleConfirm} />
       </View>
     </SafeAreaView>
   );

@@ -38,9 +38,9 @@ const CreateAccountScreen: React.FC<CreateAccountScreenProps> = ({
     <SafeAreaView style={styles.container}>
       <GlobalHeader title="Create an Account" onBackPress={handleBackPress} />
 
-      <KeyboardAvoidingView
+      <View
         style={styles.wrapper}
-        behavior={Platform.OS === "ios" ? "padding" : undefined}
+
       >
         <View style={styles.content}>
           <GlobalInput
@@ -71,7 +71,7 @@ const CreateAccountScreen: React.FC<CreateAccountScreenProps> = ({
             onPress={handleCreateAccount}
           />
         </View>
-      </KeyboardAvoidingView>
+      </View>
     </SafeAreaView>
   );
 };
