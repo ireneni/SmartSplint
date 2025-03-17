@@ -5,24 +5,25 @@ import {
   TextInput,
   SafeAreaView,
   StyleSheet,
-  KeyboardAvoidingView,
+  Keyboard,
+  TouchableWithoutFeedback,
+  InputAccessoryView,
+  Button,
   Platform,
-  ScrollView,
 } from "react-native";
 import GlobalStyles from "../styles/GlobalStyles";
 import GlobalButton from "../components/GlobalButton";
 import GlobalHeader from "../components/GlobalHeader";
 import GlobalInput from "../components/GlobalInput";
-type ContactUsScreenProps = {
-  navigation: any;
-};
+
+const inputAccessoryViewID = "uniqueID";
+
 const ContactUsScreen: React.FC = ({ navigation }) => {
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [message, setMessage] = useState<string>("");
 
   const handleBackPress = () => {
-    console.log("Back arrow pressed");
     navigation.goBack();
   };
 
@@ -34,24 +35,17 @@ const ContactUsScreen: React.FC = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <GlobalHeader title="Contact Us" onBackPress={handleBackPress} />
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <SafeAreaView style={styles.container}>
+        <GlobalHeader title="Contact Us" onBackPress={handleBackPress} />
 
-      <KeyboardAvoidingView
-        style={styles.wrapper}
-        behavior={Platform.OS === "ios" ? "padding" : undefined}
-      >
-        {/* Use ScrollView so content can scroll if it's taller than the screen */}
-        <ScrollView contentContainerStyle={styles.scrollContent}>
-          {/* Subtitle / Description */}
+        <View style={styles.content}>
           <Text style={[GlobalStyles.bodyText, styles.subtitle]}>
             Send us a message, and we’ll get back to you soon.
           </Text>
 
-          {/* Name Input */}
           <GlobalInput label="Name" value={name} onChangeText={setName} />
 
-          {/* Email Input */}
           <GlobalInput
             label="Email"
             keyboardType="email-address"
@@ -60,19 +54,25 @@ const ContactUsScreen: React.FC = ({ navigation }) => {
             onChangeText={setEmail}
           />
 
-          {/* Message Input */}
           <TextInput
             style={[styles.input, styles.textArea]}
             placeholder="Type your message here..."
             multiline
             numberOfLines={5}
             textAlignVertical="top"
+            scrollEnabled={true}
             value={message}
             onChangeText={setMessage}
+            // Allow new line insertion by keeping blurOnSubmit false
+            blurOnSubmit={false}
+            // returnKeyType will be ignored on iOS when multiline is true
+            returnKeyType="default"
+            inputAccessoryViewID={
+              Platform.OS === "ios" ? inputAccessoryViewID : undefined
+            }
           />
-        </ScrollView>
+        </View>
 
-        {/* Button pinned 40px from the bottom */}
         <View style={GlobalStyles.buttonContainer}>
           <GlobalButton
             title="Send Message"
@@ -80,8 +80,16 @@ const ContactUsScreen: React.FC = ({ navigation }) => {
             onPress={handleSendMessage}
           />
         </View>
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+
+        {Platform.OS === "ios" && (
+          <InputAccessoryView nativeID={inputAccessoryViewID}>
+            <View style={styles.accessory}>
+              <Button title="Done" onPress={Keyboard.dismiss} />
+            </View>
+          </InputAccessoryView>
+        )}
+      </SafeAreaView>
+    </TouchableWithoutFeedback>
   );
 };
 
@@ -92,13 +100,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
   },
-  wrapper: {
+  content: {
     flex: 1,
-  },
-  scrollContent: {
     paddingHorizontal: 24,
     paddingTop: 24,
-    paddingBottom: 100,
   },
   subtitle: {
     textAlign: "center",
@@ -114,7 +119,11 @@ const styles = StyleSheet.create({
     height: 50,
   },
   textArea: {
-    // Increase the height for a multiline input
-    height: 250,
+    height: 200,
+  },
+  accessory: {
+    backgroundColor: "#eee",
+    padding: 8,
+    alignItems: "flex-end",
   },
 });

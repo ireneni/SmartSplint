@@ -5,7 +5,6 @@ import {
   Text,
   Image,
   StyleSheet,
-  KeyboardAvoidingView,
   Platform,
 } from "react-native";
 import GlobalHeader from "../components/GlobalHeader";
@@ -46,10 +45,8 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
     <SafeAreaView style={styles.container}>
       <GlobalHeader title="Home" onBackPress={handleBackPress} />
 
-      <KeyboardAvoidingView
-        style={styles.wrapper}
-        behavior={Platform.OS === "ios" ? "padding" : undefined}
-      >
+      {/* Removed KeyboardAvoidingView to keep the button static */}
+      <View style={styles.wrapper}>
         <View style={styles.content}>
           {/* Scanner Kit Image */}
           <Image source={scannerKitImage} style={styles.scannerImage} />
@@ -67,7 +64,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
             style={styles.input}
           />
         </View>
-        {/* Order Kit Button */}
+        {/* Order Kit Button remains static at the bottom */}
         <View style={GlobalStyles.buttonContainer}>
           <GlobalButton
             title="Order Kit"
@@ -75,7 +72,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
             onPress={handleOrderKit}
           />
         </View>
-      </KeyboardAvoidingView>
+      </View>
     </SafeAreaView>
   );
 };
@@ -89,6 +86,7 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     flex: 1,
+    justifyContent: "space-between", // Keeps the button fixed at the bottom
   },
   content: {
     flexGrow: 1, // Ensures content fills available space
