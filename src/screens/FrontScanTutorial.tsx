@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { SafeAreaView, StyleSheet } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import uuid from 'react-native-uuid';
+
 import GlobalHeader from '../components/GlobalHeader';
 import TutorialScreen from './TutorialScreen';
 
@@ -24,23 +27,46 @@ const frontalSlides = [
   },
 ];
 
+const initializeSession = async (hand: string, finger: string) => {
+  try {
+    let sessionId = uuid.v4(); // ✅ Correctly generates UUID in React Native
+    const userId = await AsyncStorage.getItem("userId") || "guest";
+    const expirationTime = Date.now() + 30 * 60 * 1000; // 30 min session expiry
+
+    const sessionData = {
+      sessionId,
+      userId,
+      hand,
+      finger,
+      expirationTime,
+    };
+
+    await AsyncStorage.setItem("currentSession", JSON.stringify(sessionData));
+    console.log("Session initialized:", sessionData);
+  } catch (error) {
+    console.error("Error initializing session:", error);
+  }
+};
+
 const FrontalScanTutorial: React.FC<FrontalScanTutorialProps> = ({
   navigation,
   route,
 }) => {
   const { finger, hand } = route.params;
 
+  useEffect(() => {
+    initializeSession(hand, finger);
+  }, []);
+
   const handleBackPress = () => {
     console.log('Back arrow pressed');
     navigation.goBack();
   };
 
-  // Set header title dynamically based on the selected finger.
   const headerTitle = `${finger}`;
 
   const handleContinue = () => {
     console.log('Go to camera');
-    // Pass scanType: "front" so the Scanning screen knows it's a front scan.
     navigation.navigate('Scanning', {
       finger,
       hand,

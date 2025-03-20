@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Dimensions,
   Pressable,
+  Image,
 } from "react-native";
 import {
   CameraType,
@@ -73,7 +74,6 @@ const ScanningScreen: React.FC<ScanningScreenProps> = () => {
           return;
         }
 
-        setPhoto(photo);
         navigation.push("ConfirmImage", { photo, finger, hand, scanType });
       } catch (error) {
         console.error("Error capturing photo:", error);
@@ -100,12 +100,20 @@ const ScanningScreen: React.FC<ScanningScreenProps> = () => {
     <SafeAreaView style={styles.container}>
       <View style={styles.topPadding} />
 
-      <CameraView
-        style={styles.cameraContainer}
-        facing={facing}
-        ref={cameraRef}
-        flash="on"
-      />
+      <View style={styles.cameraWrapper}>
+        <CameraView
+          style={styles.cameraContainer}
+          facing={facing}
+          ref={cameraRef}
+          flash="on"
+        />
+        {/* Finger Overlay Image */}
+        <Image
+          source={require("../assets/finger-overlay.png")}
+          style={styles.overlay}
+          resizeMode="contain"
+        />
+      </View>
 
       <View style={styles.actionBar}>
         <GlobalIconButton
@@ -140,9 +148,20 @@ const styles = StyleSheet.create({
   topPadding: {
     height: 60,
   },
-  cameraContainer: {
+  cameraWrapper: {
     width: "100%",
     height: (width * 4) / 3,
+    position: "relative", // Allows absolute positioning inside
+  },
+  cameraContainer: {
+    width: "100%",
+    height: "100%",
+  },
+  overlay: {
+    position: "absolute",
+    width: width,
+    aspectRatio: 1,
+    bottom: 0,
   },
   actionBar: {
     flexDirection: "row",
