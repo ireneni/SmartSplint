@@ -6,14 +6,17 @@ import {
   TouchableOpacity,
   Image,
   StyleSheet,
+  Alert,
 } from "react-native";
 import GlobalStyles from "../styles/GlobalStyles";
 import GlobalButton from "../components/GlobalButton";
 import GlobalInput from "../components/GlobalInput";
 import GlobalHeader from "../components/GlobalHeader";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebaseConfig"; // Ensure this path is correct
 
 type LoginScreenProps = {
-  navigation: any; // or use the proper type from React Navigation
+  navigation: any; // You can use proper types from React Navigation if desired
 };
 
 const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
@@ -25,9 +28,18 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
     navigation.goBack();
   };
 
-  const handleSignIn = () => {
+  const handleSignIn = async () => {
     console.log(`Signing in with email=${email}, password=${password}`);
-    navigation.navigate("Home");
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      console.log("User signed in:", userCredential.user.email);
+      // Navigate to Home screen after successful login
+      navigation.navigate("Home");
+    } catch (error: any) {
+      console.error("Error signing in:", error.code, error.message);
+      // Display an alert to the user if authentication fails
+      Alert.alert("Login Failed", error.message || "An error occurred during login.");
+    }
   };
 
   return (
@@ -63,9 +75,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
         />
 
         {/* Forgot password link */}
-        <TouchableOpacity
-          onPress={() => console.log("Forgot password pressed")}
-        >
+        <TouchableOpacity onPress={() => console.log("Forgot password pressed")}>
           <Text style={[GlobalStyles.linkText, styles.forgotPasswordText]}>
             Forgot password?
           </Text>

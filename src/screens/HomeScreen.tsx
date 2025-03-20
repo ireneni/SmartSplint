@@ -16,7 +16,7 @@ type HomeScreenProps = {
   navigation: any;
 };
 
-const scannerKitImage = require("../assets/scanner-kit.jpg");
+const scannerKitImage = require("../assets/scanningbox.png");
 
 const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
   const [activationCode, setActivationCode] = useState("");

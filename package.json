@@ -16,6 +16,7 @@
     "expo": "~52.0.38",
     "expo-camera": "~16.0.18",
     "expo-font": "~13.0.4",
+    "firebase": "^11.4.0",
     "react": "18.3.1",
     "react-native": "0.76.7",
     "react-native-reanimated": "~3.16.1",
