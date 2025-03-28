@@ -1,25 +1,34 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   SafeAreaView,
   View,
   Text,
   Image,
   StyleSheet,
-  Platform,
-  KeyboardAvoidingView,
 } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage"; // ✅ Import AsyncStorage
+
 import GlobalHeader from "../components/GlobalHeader";
 import GlobalButton from "../components/GlobalButton";
 import GlobalStyles from "../styles/GlobalStyles";
 
-type ImageConfirmedScreenProps = {
-  navigation: any;
-};
-
 // Import your PNG image (ensure the path is correct)
 const thumbsupIcon = require("../assets/thumbs-up.png");
 
+const clearSession = async () => {
+  try {
+    await AsyncStorage.removeItem("currentSession");
+    console.log("Session cleared.");
+  } catch (error) {
+    console.error("Error clearing session:", error);
+  }
+};
+
 const ImageConfirmedScreen: React.FC = ({ navigation }) => {
+  useEffect(() => {
+    clearSession(); 
+  }, []);
+
   const handleBackPress = () => {
     console.log("Back arrow pressed");
     navigation.goBack();

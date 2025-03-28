@@ -32,7 +32,8 @@ npx expo start
 yarn expo start
 ```
 This will start the Expo development server and generate a QR code.
-5️⃣ Run the App on Your Device or Emulator
+
+### 5️⃣ Run the App on Your Device or Emulator
 
     📱 On Physical Device: Scan the QR code in the Expo Go app (available on iOS & Android).
     🖥️ On Emulator: Press "i" to open in iOS Simulator or "a" for Android Emulator (requires setup).
