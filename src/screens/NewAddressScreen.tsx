@@ -3,42 +3,53 @@ import {
   SafeAreaView,
   View,
   StyleSheet,
-  KeyboardAvoidingView,
-  Platform,
+  Alert,
 } from "react-native";
 import GlobalHeader from "../components/GlobalHeader";
 import GlobalInput from "../components/GlobalInput";
 import GlobalButton from "../components/GlobalButton";
 import GlobalStyles from "../styles/GlobalStyles";
+import { addUserAddress } from "../addressService"; // Import your address service
 
 type NewAddressScreenProps = {
   navigation: any;
 };
 
-const NewAddressScreen: React.FC = ({ navigation }) => {
+const NewAddressScreen: React.FC<NewAddressScreenProps> = ({ navigation }) => {
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
   const [postalCode, setPostalCode] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleBackPress = () => {
-    console.log("Back arrow pressed");
     navigation.goBack();
   };
 
-  const handleConfirmAddress = () => {
-    console.log(
-      `Address: ${address}, City: ${city}, PostalCode: ${postalCode}`
-    );
-    navigation.navigate("OrderKit");
+  const handleConfirmAddress = async () => {
+    // Optionally validate inputs here before attempting to save
+    if (!address || !city || !postalCode) {
+      Alert.alert("Error", "Please fill out all fields.");
+      return;
+    }
+    setLoading(true);
+    try {
+      const newAddressId = await addUserAddress(address, city, postalCode);
+      console.log(`Address added with id: ${newAddressId}`);
+      // Navigate to the next screen after successful addition
+      navigation.navigate("OrderKit");
+    } catch (error: any) {
+      console.error("Error adding address:", error);
+      Alert.alert("Error", error.message || "Failed to add address.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <GlobalHeader title="New Address" onBackPress={handleBackPress} />
 
-      <View
-        style={styles.wrapper}
-      >
+      <View style={styles.wrapper}>
         <View style={styles.content}>
           <GlobalInput
             label="Address"
@@ -56,9 +67,10 @@ const NewAddressScreen: React.FC = ({ navigation }) => {
         {/* Button pinned at the bottom */}
         <View style={GlobalStyles.buttonContainer}>
           <GlobalButton
-            title="Confirm Address"
+            title={loading ? "Saving..." : "Confirm Address"}
             variant="primary"
             onPress={handleConfirmAddress}
+            disabled={loading}
           />
         </View>
       </View>
