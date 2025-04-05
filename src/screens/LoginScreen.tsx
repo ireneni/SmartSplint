@@ -47,14 +47,6 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
       {/* Header */}
       <GlobalHeader title="Welcome Back" onBackPress={handleBackPress} />
 
-      {/* Top image / header */}
-      <View style={styles.headerImageContainer}>
-        <Image
-          source={require("../assets/login-hands.jpg")}
-          style={styles.headerImage}
-        />
-      </View>
-
       {/* Main content area */}
       <View style={styles.contentContainer}>
         {/* Email Input (GlobalInput) */}
@@ -100,14 +92,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-  },
-  headerImageContainer: {
-    height: 240,
-  },
-  headerImage: {
-    width: "100%",
-    height: "100%",
-    resizeMode: "cover",
   },
   contentContainer: {
     paddingHorizontal: 24,
