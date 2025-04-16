@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import {
+  Alert,
   SafeAreaView,
   View,
   Text,
@@ -83,17 +84,32 @@ const ScanningScreen: React.FC<ScanningScreenProps> = () => {
 
   const handleExit = () => {
     console.log("Exit Pressed");
+    Alert.alert(
+      "Confirm Exit",
+      "Are you sure you want to exit to home?",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Exit cancelled"),
+          style: "cancel"
+        },
+        {
+          text: "OK",
+          onPress: () => navigation.navigate("HandSelection")
+        }
+      ],
+      { cancelable: false }
+    );
+  };
+
+  const handleHelp = () => {
+    console.log("Help Pressed");
     // Instead of simply going back, explicitly navigate to the originating tutorial
     if (scanType === "front") {
       navigation.navigate("FrontScanTutorial", { finger, hand });
     } else {
       navigation.navigate("SideScanTutorial", { finger, hand });
     }
-  };
-
-  const handleHelp = () => {
-    console.log("Help Pressed");
-    // Optionally navigate to a help screen or show a modal
   };
 
   return (
