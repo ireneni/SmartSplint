@@ -15,13 +15,12 @@ import ShippingConfirmedScreen from "./src/screens/ShippingConfirmedScreen";
 import HandSelectionScreen from "./src/screens/HandSelectionScreen";
 import ContactUsScreen from "./src/screens/ContactUsScreen";
 import FingerSelectionScreen from "./src/screens/FingerSelectionScreen";
-
-
 import ScanningScreen from "./src/screens/ScanningScreen";
 import ConfirmImageScreen from "./src/screens/ConfirmImageScreen";
 import ImageConfirmedScreen from "./src/screens/ImageConfirmedScreen";
 import FrontScanTutorial from "./src/screens/FrontScanTutorial";
 import SideScanTutorial from "./src/screens/SideScanTutorial";
+import VideoTutorialScreen from "./src/screens/VideoTutorialScreen";
 
 const Stack = createStackNavigator();
 
@@ -48,6 +47,7 @@ export default function App() {
                <Stack.Screen name="FingerSelection" component={FingerSelectionScreen} />
                <Stack.Screen name="FrontScanTutorial" component={FrontScanTutorial} />
                <Stack.Screen name="SideScanTutorial" component={SideScanTutorial} />
+               <Stack.Screen name="VideoTutorial" component={VideoTutorialScreen} />
                <Stack.Screen name="Scanning" component={ScanningScreen} />
                <Stack.Screen name="ConfirmImage" component={ConfirmImageScreen} />
                <Stack.Screen name="ImageConfirmed" component={ImageConfirmedScreen} />

@@ -8,6 +8,7 @@ import {
   FlatList,
   Dimensions,
 } from "react-native";
+import { Ionicons } from "@expo/vector-icons"; // ✅ Add this for icons
 import GlobalStyles from "../styles/GlobalStyles";
 import GlobalButton from "../components/GlobalButton";
 
@@ -19,7 +20,7 @@ interface TutorialItem {
 }
 
 interface TutorialScreenProps {
-  slides: TutorialItem[]; // Array of images with descriptions
+  slides: TutorialItem[];
   onVideoPress: () => void;
   onContinuePress: () => void;
 }
@@ -39,16 +40,30 @@ const TutorialScreen: React.FC<TutorialScreenProps> = ({
     setCurrentIndex(newIndex);
   };
 
+  const scrollToIndex = (index: number) => {
+    flatListRef.current?.scrollToIndex({ index, animated: true });
+    setCurrentIndex(index);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.content}>
-        {/* Dynamic Description */}
         <Text style={styles.description}>
           {slides[currentIndex].description}
         </Text>
 
-        {/* Image Carousel */}
-        <View style={styles.imageWrapper}>
+        <View style={styles.carouselContainer}>
+          {/* Left Arrow */}
+          {currentIndex > 0 && (
+            <Pressable
+              style={[styles.arrowButton, styles.leftArrow]}
+              onPress={() => scrollToIndex(currentIndex - 1)}
+            >
+              <Ionicons name="chevron-back" size={24} color="#333" />
+            </Pressable>
+          )}
+
+          {/* Carousel */}
           <FlatList
             ref={flatListRef}
             data={slides}
@@ -67,9 +82,19 @@ const TutorialScreen: React.FC<TutorialScreenProps> = ({
               </View>
             )}
           />
+
+          {/* Right Arrow */}
+          {currentIndex < slides.length - 1 && (
+            <Pressable
+              style={[styles.arrowButton, styles.rightArrow]}
+              onPress={() => scrollToIndex(currentIndex + 1)}
+            >
+              <Ionicons name="chevron-forward" size={24} color="#333" />
+            </Pressable>
+          )}
         </View>
 
-        {/* Dot Indicators */}
+        {/* Dots */}
         <View style={styles.dotContainer}>
           {slides.map((_, index) => (
             <View
@@ -111,17 +136,22 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 16,
   },
-  imageWrapper: {
+  carouselContainer: {
     width: width * 0.75,
     height: width * 0.75,
+    justifyContent: "center",
+    alignItems: "center",
   },
   imageContainer: {
-    width: width * 0.75, // Ensures each item takes up full FlatList width
+    width: width * 0.75,
     height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
   },
   image: {
     width: "100%",
     height: "100%",
+    borderRadius: 16,
   },
   dotContainer: {
     flexDirection: "row",
@@ -132,11 +162,34 @@ const styles = StyleSheet.create({
     width: 12,
     height: 12,
     borderRadius: 6,
-    backgroundColor: "#D3D3D3", // Default gray
+    backgroundColor: "#D3D3D3",
     marginHorizontal: 6,
   },
   activeDot: {
-    backgroundColor: "#0A2463", // Active dot color (Primary button color)
+    backgroundColor: "#0A2463",
+  },
+  arrowButton: {
+    position: "absolute",
+    top: "50%",
+    transform: [{ translateY: -20 }],
+    width: 36,
+    height: 36,
+    borderRadius: 20,
+    backgroundColor: "rgba(255, 255, 255, 0.9)",
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 2,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+    elevation: 4,
+  },
+  leftArrow: {
+    left: 20,
+  },
+  rightArrow: {
+    right: 20,
   },
 });
 
